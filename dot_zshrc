@@ -19,6 +19,7 @@ plugins=(
 	asdf
 	git
 	zsh-syntax-highlighting
+	z
 )
 
 . $HOME/.asdf/asdf.sh
