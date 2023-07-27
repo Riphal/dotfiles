@@ -1,0 +1,80 @@
+# ================ History =================================
+
+export HISTFILE=~/.zsh_history                         # Set history file location
+export HISTSIZE=10000                                  # More history in memory
+export SAVEHIST=10000                                  # More history on disk
+export HISTORY_FILTER_EXCLUDE=("http://" "https://")   # Ignore commands with urls
+setopt INC_APPEND_HISTORY                              # Append history incrementally
+setopt HIST_IGNORE_ALL_DUPS                            # Ignore all duplicates
+
+# ================ Config ==================================
+
+export ZSH=~/.oh-my-zsh
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+	asdf
+	git
+	zsh-syntax-highlighting
+)
+
+. $HOME/.asdf/asdf.sh
+
+#
+# zplug
+#
+if [[ -s "$HOME/.zplug/init.zsh" ]]; then
+  source "$HOME/.zplug/init.zsh"
+fi
+
+# disable oh-my-zsh themes for pure prompt
+ZSH_THEME=""
+
+source $ZSH/oh-my-zsh.sh
+
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug "mafredri/zsh-async", from:github
+
+# Zsh plugins
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search"
+
+# Theme
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+
+# Dev
+zplug "rupa/z", as:command, use:z.sh
+zplug "b4b4r07/httpstat", as:command, use:"httpstat.sh", rename-to:httpstat
+zplug "raylee/tldr", as:command, use:"tldr"
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check; then
+  zplug check --verbose
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+zplug load
+
+# ================ Path =================
+export PATH="$HOME/go/bin:$PATH"
+
+# ================ Better Versions =========================
+
+alias cat='bat'
+alias less='bat'
+alias diff='delta'
+alias find='fd'
+alias ps='procs'
+alias ls='exa'
+alias df='duf'
+alias du='dust'
+
