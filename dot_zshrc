@@ -1,3 +1,7 @@
+# ================ Path =================
+export PATH=$(brew --prefix)/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
+
 # ================ History =================================
 
 export HISTFILE=~/.zsh_history                         # Set history file location
@@ -8,6 +12,8 @@ setopt INC_APPEND_HISTORY                              # Append history incremen
 setopt HIST_IGNORE_ALL_DUPS                            # Ignore all duplicates
 
 # ================ Config ==================================
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 export ZSH=~/.oh-my-zsh
 
@@ -16,27 +22,22 @@ export ZSH=~/.oh-my-zsh
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	asdf
-	git
-	zsh-syntax-highlighting
-	z
+        asdf
+        git
+        zsh-syntax-highlighting
+        zsh-autosuggestions
+        z
 )
 
-. $HOME/.asdf/asdf.sh
-
-#
-# zplug
-#
-if [[ -s "$HOME/.zplug/init.zsh" ]]; then
-  source "$HOME/.zplug/init.zsh"
-fi
+. $(brew --prefix)/opt/asdf/libexec/asdf.sh
 
 # disable oh-my-zsh themes for pure prompt
 ZSH_THEME=""
 
 source $ZSH/oh-my-zsh.sh
 
-export ZPLUG_HOME=/opt/homebrew/opt/zplug
+# zplug
+export ZPLUG_HOME=$(brew --prefix)/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug "mafredri/zsh-async", from:github
@@ -65,17 +66,13 @@ if ! zplug check; then
 fi
 zplug load
 
-# ================ Path =================
-export PATH="$HOME/go/bin:$PATH"
-
 # ================ Better Versions =========================
 
-alias cat='bat'
-alias less='bat'
-alias diff='delta'
-alias find='fd'
-alias ps='procs'
-alias ls='exa'
-alias df='duf'
-alias du='dust'
-
+alias cat='bat' # brew install bat
+alias less='bat' # brew install bat
+alias diff='delta' # brew install git-delta
+alias find='fd' # brew install fd
+alias ps='procs' # brew install procs
+alias ls='exa' # brew install exa
+alias df='duf' # brew install duf
+alias du='dust' # brew install dust
